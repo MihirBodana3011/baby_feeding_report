@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+<html lang="hi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>9 Mahine ke Bacche ka Feeding Report</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --green: #2D6A4F;
+      --green-light: #74C69D;
+      --green-pale: #D8F3DC;
+      --green-mid: #52B788;
+      --amber: #E07B39;
+      --amber-pale: #FFF3E0;
+      --red: #C0392B;
+      --red-pale: #FDECEA;
+      --blue: #2471A3;
+      --blue-pale: #EAF4FB;
+      --gray: #5D6D7E;
+      --gray-light: #F4F6F7;
+      --text: #1A1A2E;
+      --text-muted: #555B6E;
+      --border: #DCE1E7;
+      --white: #FFFFFF;
+      --page-bg: #F7F9F7;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--page-bg);
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* HEADER */
+    .header {
+      background: var(--green);
+      color: white;
+      padding: 36px 48px 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header::after {
+      content: '';
+      position: absolute;
+      bottom: -30px;
+      right: -30px;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -40px;
+      right: 120px;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .header-tag {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--green-light);
+      margin-bottom: 10px;
+    }
+
+    .header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 8px;
+    }
+
+    .header-sub {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.75);
+      margin-bottom: 20px;
+    }
+
+    .header-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .badge {
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+    }
+
+    /* MAIN CONTENT */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 36px 24px 60px;
+    }
+
+    /* SECTION TITLES */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 36px 0 16px;
+    }
+
+    .section-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .section-sub {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* MILK NOTE CARD */
+    .milk-note {
+      background: var(--blue-pale);
+      border-left: 4px solid var(--blue);
+      border-radius: 0 10px 10px 0;
+      padding: 14px 18px;
+      margin-bottom: 28px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .milk-note-icon {
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .milk-note-title {
+      font-weight: 600;
+      color: var(--blue);
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .milk-note-text {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* MEAL TIME LEGEND */
+    .meal-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .legend-pill {
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    /* WEEKLY TABLE */
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: white;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 900px;
+    }
+
+    thead tr {
+      background: var(--green);
+    }
+
+    thead th {
+      padding: 12px 14px;
+      text-align: left;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      color: white;
+    }
+
+    thead th:first-child {
+      border-radius: 11px 0 0 0;
+    }
+
+    thead th:last-child {
+      border-radius: 0 11px 0 0;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+    }
+
+    tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    tbody tr:nth-child(even) {
+      background: var(--gray-light);
+    }
+
+    td {
+      padding: 11px 14px;
+      vertical-align: top;
+      font-size: 13px;
+      color: var(--text);
+    }
+
+    td:first-child {
+      font-weight: 600;
+      color: var(--green);
+      width: 80px;
+      font-size: 13px;
+      border-right: 1px solid var(--border);
+    }
+
+    .meal-item {
+      margin-bottom: 2px;
+    }
+
+    .meal-item-name {
+      font-weight: 500;
+    }
+
+    .meal-item-tag {
+      display: inline-block;
+      font-size: 10px;
+      padding: 1px 7px;
+      border-radius: 10px;
+      margin-left: 4px;
+      font-weight: 500;
+      vertical-align: middle;
+    }
+
+    .tag-morning {
+      background: #FFF8E1;
+      color: #E07B39;
+    }
+
+    .tag-lunch {
+      background: var(--green-pale);
+      color: var(--green);
+    }
+
+    .tag-evening {
+      background: #FFF3F0;
+      color: #C0392B;
+    }
+
+    .tag-night {
+      background: #EAF4FB;
+      color: var(--blue);
+    }
+
+    /* RECIPE CARDS GRID */
+    .recipe-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 4px;
+    }
+
+    .recipe-card {
+      background: white;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      padding: 16px;
+      transition: box-shadow 0.2s;
+    }
+
+    .recipe-card:hover {
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    .recipe-card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .recipe-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: var(--green);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .recipe-name {
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .recipe-meal-label {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .recipe-section {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      margin: 8px 0 4px;
+    }
+
+    .ingr-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .ingr-pill {
+      font-size: 11px;
+      padding: 2px 8px;
+      background: var(--green-pale);
+      color: var(--green);
+      border-radius: 10px;
+    }
+
+    .steps-ol {
+      padding-left: 16px;
+    }
+
+    .steps-ol li {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 3px;
+    }
+
+    .recipe-tip {
+      margin-top: 10px;
+      padding: 7px 10px;
+      background: var(--amber-pale);
+      border-left: 3px solid var(--amber);
+      border-radius: 0 6px 6px 0;
+      font-size: 11px;
+      color: #7B4A1E;
+    }
+
+    /* AVOID TABLE */
+    .avoid-table-wrap {
+      border-radius: 12px;
+      border: 1px solid #F5B8B0;
+      overflow: hidden;
+      background: white;
+    }
+
+    .avoid-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .avoid-table thead tr {
+      background: var(--red);
+    }
+
+    .avoid-table thead th {
+      padding: 10px 14px;
+      color: white;
+      font-size: 12px;
+      font-weight: 600;
+      text-align: left;
+      letter-spacing: 0.5px;
+    }
+
+    .avoid-table tbody tr {
+      border-bottom: 1px solid #FCE4E4;
+    }
+
+    .avoid-table tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    .avoid-table tbody tr:nth-child(even) {
+      background: #FFF8F8;
+    }
+
+    .avoid-table td {
+      padding: 10px 14px;
+      font-size: 13px;
+      vertical-align: top;
+    }
+
+    .avoid-table td:first-child {
+      font-weight: 500;
+      color: var(--red);
+      width: 160px;
+    }
+
+    .danger-tag {
+      display: inline-block;
+      font-size: 10px;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-weight: 600;
+      margin-left: 4px;
+    }
+
+    .danger-high {
+      background: #FDECEA;
+      color: var(--red);
+    }
+
+    .danger-mid {
+      background: #FFF3E0;
+      color: var(--amber);
+    }
+
+    /* TIPS BOX */
+    .tips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+    }
+
+    .tip-card {
+      background: white;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      padding: 14px;
+    }
+
+    .tip-icon {
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+
+    .tip-title {
+      font-weight: 600;
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+
+    .tip-text {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* DAILY SCHEDULE */
+    .schedule-wrap {
+      background: white;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .schedule-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .schedule-row:last-child {
+      border-bottom: none;
+    }
+
+    .schedule-time {
+      width: 110px;
+      flex-shrink: 0;
+      padding: 12px 14px;
+      font-weight: 600;
+      font-size: 12px;
+      color: var(--green);
+      background: var(--green-pale);
+      border-right: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+    }
+
+    .schedule-meal {
+      padding: 12px 14px;
+      font-size: 13px;
+      flex: 1;
+    }
+
+    .schedule-meal strong {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .schedule-meal span {
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    /* FOOTER */
+    .footer {
+      margin-top: 48px;
+      padding: 20px 24px;
+      background: var(--green);
+      color: rgba(255, 255, 255, 0.8);
+      border-radius: 12px;
+      text-align: center;
+      font-size: 12px;
+    }
+
+    .footer strong {
+      color: white;
+    }
+
+    /* PRINT */
+    @media print {
+      @page { margin: 10mm; }
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      body {
+        background: white;
+        font-size: 12px;
+        color: black;
+      }
+      .container {
+        padding: 0;
+        max-width: 100%;
+      }
+      .header {
+        padding: 24px;
+        page-break-after: avoid;
+        break-after: avoid;
+      }
+      .section-header {
+        page-break-after: avoid;
+        break-after: avoid;
+        page-break-inside: avoid;
+      }
+      .recipe-card,
+      .tip-card,
+      .avoid-table-wrap,
+      .table-wrap,
+      table,
+      tr,
+      .milk-note {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+      .recipe-grid {
+        display: block;
+      }
+      .recipe-card {
+        display: inline-block;
+        width: 48%;
+        margin-right: 1%;
+        margin-bottom: 12px;
+        vertical-align: top;
+      }
+      #recipes-start, #avoid-start {
+        page-break-before: always;
+        break-before: page;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .header {
+        padding: 24px 20px;
+      }
+
+      .header h1 {
+        font-size: 24px;
+      }
+
+      .container {
+        padding: 20px 12px 40px;
+      }
+
+      .recipe-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .tips-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-tag">Pediatric Feeding Guide</div>
+    <h1>9 Mahine ke Bacche ka<br>Poora Feeding Report (Pure Veg)</h1>
+    <div class="header-sub">Doctor ki salah ke anusaar — Weekly Pure Veg Meal Plan, Recipes aur Avoid List</div>
+    <div class="header-badges">
+      <span class="badge">Age: 9 Months</span>
+      <span class="badge">100% Pure Veg Plan</span>
+      <span class="badge">Amul Taja — Doctor Approved</span>
+      <span class="badge">Salt &amp; Sugar Free</span>
+      <span class="badge">7-Day Plan</span>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- MILK NOTE -->
+    <div class="section-header">
+      <div class="section-icon" style="background:#EAF4FB;">🍼</div>
+      <div>
+        <div class="section-title">Amul Taja ke baare mein Doctor ki Salah</div>
+      </div>
+    </div>
+    <div class="milk-note">
+      <div class="milk-note-icon">ℹ️</div>
+      <div>
+        <div class="milk-note-title">Doctor ne Amul Taja (Cow's Milk) Ko Allow Kiya Hai — Par Kam Maatra Mein</div>
+        <div class="milk-note-text">
+          Amul Taja pilana <strong>Doctor ke anumati se bilkul theek hai</strong>. Lekin quantity limited rakhein:<br>
+          • <strong>Peene ke liye:</strong> Ek baar mein 100–150 ml se zyaada nahi — din mein 2–3 baar.<br>
+          • <strong>Cooking mein:</strong> Kheer, dalia, oats banate waqt freely use kar sakte hain.<br>
+          • <strong>Dhyan rakhen:</strong> Cow's milk mein Protein aur Minerals zyaada hote hain jo 9 mahine mein kidney
+          ke liye heavy ho sakte hain — isliye quantity control zaroori hai.<br>
+          • Boil karke, thanda hokar dein. Direct fridge se nahi dena.
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- WEEKLY MEAL TABLE -->
+    <div class="section-header">
+      <div class="section-icon" style="background:var(--green-pale);">📅</div>
+      <div>
+        <div class="section-title">7-Day Weekly Meal Table</div>
+        <div class="section-sub">Har din ke charon meals ek saath</div>
+      </div>
+    </div>
+    <div class="meal-legend">
+      <span class="legend-pill tag-morning">Breakfast (9–10 am)</span>
+      <span class="legend-pill tag-lunch">Lunch (12–1 pm)</span>
+      <span class="legend-pill tag-evening">Snack (5–6 pm)</span>
+      <span class="legend-pill tag-night">Dinner (7–8 pm)</span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Din</th>
+            <th>Wake Up <span style="font-weight:300;opacity:0.8">(Milk)</span></th>
+            <th>Breakfast <span style="font-weight:300;opacity:0.8">(Subah)</span></th>
+            <th>Lunch <span style="font-weight:300;opacity:0.8">(Dopahar)</span></th>
+            <th>Evening Snack <span style="font-weight:300;opacity:0.8">(Shaam)</span></th>
+            <th>Dinner <span style="font-weight:300;opacity:0.8">(Raat)</span></th>
+            <th>Bedtime <span style="font-weight:300;opacity:0.8">(Milk)</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Somvar</td>
+            <td><div class="meal-item"><span class="meal-item-name">Amul Taja</span><span class="meal-item-tag tag-night">100ml</span></div></td>
+            <td>
+              <div class="meal-item"><span class="meal-item-name">Ragi ki Kheer</span><span
+                  class="meal-item-tag tag-morning">Iron</span></div>
+            </td>
+            <td>
+              <div class="meal-item"><span class="meal-item-name">Moong Dal Khichdi</span><span
+                  class="meal-item-tag tag-lunch">Protein</span></div>
+            </td>
+            <td>
+              <div class="meal-item"><span class="meal-item-name">Kele (Banana) Puree</span><span
+                  class="meal-item-tag tag-evening">Energy</span></div>
+            </td>
+            <td>
+              <div class="meal-item"><span class="meal-item-name">Tomato (Tamatar) Soup</span><span
+                  class="meal-item-tag tag-night">Light</span></div>
+            </td>
+            <td><div class="meal-item"><span class="meal-item-name">Amul Taja</span><span class="meal-item-tag tag-night">100ml</span></div></td>
+          </tr>
+          <tr>
+            <td>Mangalvar</td>
+            <td><div class="meal-item"><span class="meal-item-name">Amul Taja</span><span class="meal-item-tag tag-night">100ml</span></div></td>
+            <td>
+              <div class="meal-item"><span class="meal-item-name">Suji ka Halwa</span><span
+                  class="meal-item-tag tag-morning">Carbs</span></div>
+            </td>
+            <td>
+              <div class="meal-item"><span class="meal-item-name">Shakarkandi (Sweet Potato) Mash</span><span
+                  class="meal-item-tag tag-lunch">Energy</span></div>
+            </td>
+            <td>
+              <div class="meal-item"><span class="meal-item-name">Seb (Apple) Puree</span><span
+                  class="meal-item-tag tag-evening">Fibre</span></div>
+            </td>
+            <td>
+              <div class="meal-item"><span class="meal-item-name">Moong Dal Soup</span><span
+                  class="meal-item-tag tag-night">Protein</span></div>
+            </td>
+            <td><div class="meal-item"><span class="meal-item-name">Amul Taja</span><span class="meal-item-tag tag-night">100ml</span></div></td>
+          </tr>
+          <tr>
+            <td>Budhvar</td>
+            <td><div class="meal-item"><span class="meal-item-name">Amul Taja</span><span class="meal-item-tag tag-night">100ml</span></div></td>
+            <td>
+              <div class="meal-item"><span class="meal-item-name">Dahi + Kela (Banana) Mix</span><span
+                  class="meal-item-tag tag-morning">Probiotic</span></div>
+            </td>
+            <td>
+              <div class="meal-item"><span class="meal-item-name">Gajar-Aloo Puree</span><span
+                  class="meal-item-tag tag-lunch">Vit A</span></div>
+            </td>
+            <td>
+              <div class="meal-item"><span class="meal-item-name">Papaya Puree</span><span
+                  class="meal-item-tag tag-evening">Digest</span></div>
+            </td>
+            <td>
+              <div class="meal-item"><span class="meal-item-name">Dal-Chawal Pani</span><span
+                  class="meal-item-tag tag-night">Light</span></div>
+            </td>
+            <td><div class="meal-item"><span class="meal-item-name">Amul Taja</span><span class="meal-item-tag tag-night">100ml</span></div></td>
+          </tr>
+          <tr>
+            <td>Guruvaar</td>
+            <td><div class="meal-item"><span class="meal-item-name">Amul Taja</span><span class="meal-item-tag tag-night">100ml</span></div></td>
+            <td>
+              <div class="meal-item"><span class="meal-item-name">Baajra Kheer</span><span
+                  class="meal-item-tag tag-morning">Iron</span></div>
+            </td>
+            <td>
+              <div class="meal-item"><span class="meal-item-name">Palak Khichdi</span><span
+                  class="meal-item-tag tag-lunch">Iron</span></div>
+            </td>
+            <td>
+              <div class="meal-item"><span class="meal-item-name">Chikoo Puree</span><span
+                  class="meal-item-tag tag-evening">Energy</span></div>
+            </td>
+            <td>
+              <div class="meal-item"><span class="meal-item-name">Chaval Kheer</span><span
+                  class="meal-item-tag tag-night">Beta-C</span></div>
+            </td>
+            <td><div class="meal-item"><span class="meal-item-name">Amul Taja</span><span class="meal-item-tag tag-night">100ml</span></div></td>
+          </tr>
+          <tr>
+            <td>Shukravar</td>
+            <td><div class="meal-item"><span class="meal-item-name">Amul Taja</span><span class="meal-item-tag tag-night">100ml</span></div></td>
+            <td>
+              <div class="meal-item"><span class="meal-item-name">Poha Kheer</span><span
+                  class="meal-item-tag tag-morning">Fibre</span></div>
+            </td>
+            <td>
+              <div class="meal-item"><span class="meal-item-name">Paneer + Aloo Mash</span><span
+                  class="meal-item-tag tag-lunch">Calcium</span></div>
+            </td>
+            <td>
+              <div class="meal-item"><span class="meal-item-name">Aam / Nashpaati Puree</span><span
+                  class="meal-item-tag tag-evening">Vit C</span></div>
+            </td>
+            <td>
+              <div class="meal-item"><span class="meal-item-name">Moong Dal Soup</span><span
+                  class="meal-item-tag tag-night">Light</span></div>
+            </td>
+            <td><div class="meal-item"><span class="meal-item-name">Amul Taja</span><span class="meal-item-tag tag-night">100ml</span></div></td>
+          </tr>
+          <tr>
+            <td>Shanivar</td>
+            <td><div class="meal-item"><span class="meal-item-name">Amul Taja</span><span class="meal-item-tag tag-night">100ml</span></div></td>
+            <td>
+              <div class="meal-item"><span class="meal-item-name">Ragi Dosa (naram)</span><span
+                  class="meal-item-tag tag-morning">Calcium</span></div>
+            </td>
+            <td>
+              <div class="meal-item"><span class="meal-item-name">Mix Veg Khichdi</span><span
+                  class="meal-item-tag tag-lunch">Complete</span></div>
+            </td>
+            <td>
+              <div class="meal-item"><span class="meal-item-name">Nashpaati Puree</span><span
+                  class="meal-item-tag tag-evening">Fibre</span></div>
+            </td>
+            <td>
+              <div class="meal-item"><span class="meal-item-name">Sabudana Kheer</span><span
+                  class="meal-item-tag tag-night">Easy</span></div>
+            </td>
+            <td><div class="meal-item"><span class="meal-item-name">Amul Taja</span><span class="meal-item-tag tag-night">100ml</span></div></td>
+          </tr>
+          <tr>
+            <td>Raivaar</td>
+            <td><div class="meal-item"><span class="meal-item-name">Amul Taja</span><span class="meal-item-tag tag-night">100ml</span></div></td>
+            <td>
+              <div class="meal-item"><span class="meal-item-name">Dalia Kheer</span><span
+                  class="meal-item-tag tag-morning">Wholesome</span></div>
+            </td>
+            <td>
+              <div class="meal-item"><span class="meal-item-name">Chane ki Dal + Chawal</span><span
+                  class="meal-item-tag tag-lunch">Zinc</span></div>
+            </td>
+            <td>
+              <div class="meal-item"><span class="meal-item-name">Dahi + Kela</span><span
+                  class="meal-item-tag tag-evening">Probiotic</span></div>
+            </td>
+            <td>
+              <div class="meal-item"><span class="meal-item-name">Peas Soup</span><span
+                  class="meal-item-tag tag-night">Vit C</span></div>
+            </td>
+            <td><div class="meal-item"><span class="meal-item-name">Amul Taja</span><span class="meal-item-tag tag-night">100ml</span></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- RECIPES -->
+    <div class="section-header" id="recipes-start">
+      <div class="section-icon" style="background:#FFF3E0;">🍳</div>
+      <div>
+        <div class="section-title">Main Recipes — Step-by-Step</div>
+        <div class="section-sub">Sabse zyaada zaruri aur baar-baar banne waali recipes</div>
+      </div>
+    </div>
+    <div class="recipe-grid">
+
+      <div class="recipe-card">
+        <div class="recipe-card-header">
+          <div class="recipe-num">1</div>
+          <div>
+            <div class="recipe-name">Ragi ki Kheer</div>
+            <div class="recipe-meal-label">Breakfast | Iron + Calcium</div>
+          </div>
+        </div>
+        <div class="recipe-section">Ingredients</div>
+        <div class="ingr-list"><span class="ingr-pill">2 tbsp Ragi flour</span><span class="ingr-pill">1 cup Amul
+            Taja</span><span class="ingr-pill">1 tsp Ghee</span><span class="ingr-pill">Khaand (optional)</span></div>
+        <div class="recipe-section">Method</div>
+        <ol class="steps-ol">
+          <li>Ragi ko thode paani mein ghol lein</li>
+          <li>Doodh ubaalein, mixture daalein</li>
+          <li>8–10 min dheemi aag par chalate pakaaein</li>
+          <li>Geeli consistency rakhein, thanda karke dein</li>
+        </ol>
+        <div class="recipe-tip">💡 Ragi mein cow's milk se bhi zyaada calcium hota hai</div>
+      </div>
+
+      <div class="recipe-card">
+        <div class="recipe-card-header">
+          <div class="recipe-num">2</div>
+          <div>
+            <div class="recipe-name">Moong Dal Khichdi</div>
+            <div class="recipe-meal-label">Lunch | Protein + Carbs</div>
+          </div>
+        </div>
+        <div class="recipe-section">Ingredients</div>
+        <div class="ingr-list"><span class="ingr-pill">2 tbsp Chawal</span><span class="ingr-pill">1 tbsp Moong
+            dal</span><span class="ingr-pill">1 tsp Ghee</span><span class="ingr-pill">Haldi</span><span
+            class="ingr-pill">1.5 cup Paani</span></div>
+        <div class="recipe-section">Method</div>
+        <ol class="steps-ol">
+          <li>Chawal + dal dho lein</li>
+          <li>Pressure cooker mein ghee, haldi, dal-chawal daalein</li>
+          <li>3–4 seeti lene dein</li>
+          <li>Achhe se mash karein — bilkul smooth banaaein</li>
+        </ol>
+        <div class="recipe-tip">💡 Ghee se fat-soluble vitamins absorb hote hain</div>
+      </div>
+
+      <div class="recipe-card">
+        <div class="recipe-card-header">
+          <div class="recipe-num">3</div>
+          <div>
+            <div class="recipe-name">Palak Khichdi</div>
+            <div class="recipe-meal-label">Lunch | Iron + Folate</div>
+          </div>
+        </div>
+        <div class="recipe-section">Ingredients</div>
+        <div class="ingr-list"><span class="ingr-pill">2 tbsp Chawal</span><span class="ingr-pill">1 tbsp
+            Dal</span><span class="ingr-pill">4–5 Palak patte</span><span class="ingr-pill">1 tsp Ghee</span><span
+            class="ingr-pill">Haldi</span></div>
+        <div class="recipe-section">Method</div>
+        <ol class="steps-ol">
+          <li>Palak barik kaatein</li>
+          <li>Chawal-dal ke saath cooker mein daalein</li>
+          <li>3–4 seeti lene dein</li>
+          <li>Ghee dal kar mash karein</li>
+        </ol>
+        <div class="recipe-tip">💡 Ghee + Palak = iron absorption best hoti hai</div>
+      </div>
+
+      <div class="recipe-card">
+        <div class="recipe-card-header">
+          <div class="recipe-num">4</div>
+          <div>
+            <div class="recipe-name">Shakarkandi (Sweet Potato) Mash</div>
+            <div class="recipe-meal-label">Lunch | Vitamins + Energy</div>
+          </div>
+        </div>
+        <div class="recipe-section">Ingredients</div>
+        <div class="ingr-list"><span class="ingr-pill">1 choti Shakarkandi</span><span class="ingr-pill">1 tsp
+            Ghee</span><span class="ingr-pill">Chutki bhar Jeera powder</span></div>
+        <div class="recipe-section">Method</div>
+        <ol class="steps-ol">
+          <li>Shakarkandi ko achhe se dho kar ubaal lein</li>
+          <li>Chhilka nikaal kar mash karein</li>
+          <li>Ghee aur thoda jeera powder daalein</li>
+          <li>Smooth hone tak mix karein</li>
+        </ol>
+        <div class="recipe-tip">💡 Shakarkandi mein Vitamin A aur healthy carbs hote hain</div>
+      </div>
+
+      <div class="recipe-card">
+        <div class="recipe-card-header">
+          <div class="recipe-num">5</div>
+          <div>
+            <div class="recipe-name">Oats Kheer</div>
+            <div class="recipe-meal-label">Breakfast | Fibre + Protein</div>
+          </div>
+        </div>
+        <div class="recipe-section">Ingredients</div>
+        <div class="ingr-list"><span class="ingr-pill">2 tbsp Rolled Oats</span><span class="ingr-pill">1 cup Amul
+            Taja</span><span class="ingr-pill">1 tsp Ghee</span><span class="ingr-pill">Khaand thodi</span></div>
+        <div class="recipe-section">Method</div>
+        <ol class="steps-ol">
+          <li>Oats ko doodh mein daalein</li>
+          <li>Dheemi aag par 7–8 min pakaaein, chalate rahein</li>
+          <li>Geeli consistency rakhein</li>
+          <li>Thanda karke dein</li>
+        </ol>
+        <div class="recipe-tip">💡 Amul Taja mein pakane se nutrition achha milta hai</div>
+      </div>
+
+      <div class="recipe-card">
+        <div class="recipe-card-header">
+          <div class="recipe-num">6</div>
+          <div>
+            <div class="recipe-name">Mix Veg Khichdi</div>
+            <div class="recipe-meal-label">Lunch | Complete Nutrition</div>
+          </div>
+        </div>
+        <div class="recipe-section">Ingredients</div>
+        <div class="ingr-list"><span class="ingr-pill">2 tbsp Chawal</span><span class="ingr-pill">1 tbsp
+            Dal</span><span class="ingr-pill">Gajar + Lauki + Aloo</span><span class="ingr-pill">Ghee + Haldi</span>
+        </div>
+        <div class="recipe-section">Method</div>
+        <ol class="steps-ol">
+          <li>Sabzi barik kaatein</li>
+          <li>Sab pressure cooker mein daalein</li>
+          <li>3–4 seeti lene dein</li>
+          <li>Mash karein, ghee daalein</li>
+        </ol>
+        <div class="recipe-tip">💡 Ek saath kai rang ki sabzi = zyaada nutrients</div>
+      </div>
+
+      <div class="recipe-card">
+        <div class="recipe-card-header">
+          <div class="recipe-num">7</div>
+          <div>
+            <div class="recipe-name">Dahi + Kela</div>
+            <div class="recipe-meal-label">Snack | Probiotic + Energy</div>
+          </div>
+        </div>
+        <div class="recipe-section">Ingredients</div>
+        <div class="ingr-list"><span class="ingr-pill">3 tbsp Ghar ka Dahi</span><span class="ingr-pill">Half
+            Kela</span></div>
+        <div class="recipe-section">Method</div>
+        <ol class="steps-ol">
+          <li>Dahi phentein — smooth karein</li>
+          <li>Kela mash karein</li>
+          <li>Dono mix karein</li>
+          <li>Seedha dein — refrigerator ka nahi</li>
+        </ol>
+        <div class="recipe-tip">💡 Ghar ka dahi sab se achha — probiotics zyaada hote hain</div>
+      </div>
+
+      <div class="recipe-card">
+        <div class="recipe-card-header">
+          <div class="recipe-num">8</div>
+          <div>
+            <div class="recipe-name">Fruit Purees</div>
+            <div class="recipe-meal-label">Snack | Vitamins + Fibre</div>
+          </div>
+        </div>
+        <div class="recipe-section">Fruits (koi bhi)</div>
+        <div class="ingr-list"><span class="ingr-pill">Seb (Steam karein)</span><span class="ingr-pill">Kela (Raw
+            mash)</span><span class="ingr-pill">Papaya (Raw mash)</span><span class="ingr-pill">Nashpaati
+            (Steam)</span><span class="ingr-pill">Chikoo (Raw)</span></div>
+        <div class="recipe-section">Method</div>
+        <ol class="steps-ol">
+          <li>Hard fruits (seb, nashpaati) — steam 5 min, phir mash</li>
+          <li>Soft fruits (kela, papaya) — directly mash</li>
+          <li>Smooth consistency rakhein</li>
+        </ol>
+        <div class="recipe-tip">💡 Ek baar mein ek hi naya fruit introduce karein — 3 din wait</div>
+      </div>
+
+      <div class="recipe-card">
+        <div class="recipe-card-header">
+          <div class="recipe-num">9</div>
+          <div>
+            <div class="recipe-name">Tomato (Tamatar) Soup</div>
+            <div class="recipe-meal-label">Dinner | Vit C + Antioxidants</div>
+          </div>
+        </div>
+        <div class="recipe-section">Ingredients</div>
+        <div class="ingr-list"><span class="ingr-pill">1 chota Tamatar</span><span class="ingr-pill">1/4
+            Gajar</span><span class="ingr-pill">1 tsp Ghee</span><span class="ingr-pill">Jeera powder</span></div>
+        <div class="recipe-section">Method</div>
+        <ol class="steps-ol">
+          <li>Tamatar aur gajar ko ubaal lein</li>
+          <li>Chhilka nikaal kar blend/mash karein</li>
+          <li>Ghee aur jeera powder ke saath halka pakaaein</li>
+          <li>Chhan kar ya aise hi warm dein</li>
+        </ol>
+        <div class="recipe-tip">💡 Tamatar ka chhilka aur beej nikaalna digestion ke liye achha hai</div>
+      </div>
+
+      <div class="recipe-card">
+        <div class="recipe-card-header">
+          <div class="recipe-num">10</div>
+          <div>
+            <div class="recipe-name">Poha Kheer</div>
+            <div class="recipe-meal-label">Breakfast/Dinner | Easy Digest</div>
+          </div>
+        </div>
+        <div class="recipe-section">Ingredients</div>
+        <div class="ingr-list"><span class="ingr-pill">2 tbsp Poha</span><span class="ingr-pill">1 cup Amul
+            Taja</span><span class="ingr-pill">1 tsp Ghee</span></div>
+        <div class="recipe-section">Method</div>
+        <ol class="steps-ol">
+          <li>Poha ko paani se achhe se dho lein</li>
+          <li>Doodh mein 5-7 min ubaalein jab tak soft na ho</li>
+          <li>Thoda ghee milaaein aur mash karein</li>
+          <li>Warm serve karein</li>
+        </ol>
+        <div class="recipe-tip">💡 Poha iron ka achha source hai aur pet ke liye bohot halka hai</div>
+      </div>
+
+      <div class="recipe-card">
+        <div class="recipe-card-header">
+          <div class="recipe-num">11</div>
+          <div>
+            <div class="recipe-name">Peas (Matar) Soup</div>
+            <div class="recipe-meal-label">Dinner | Protein + Vit C</div>
+          </div>
+        </div>
+        <div class="recipe-section">Ingredients</div>
+        <div class="ingr-list"><span class="ingr-pill">2 tbsp Hari Matar</span><span class="ingr-pill">1/4
+            Aloo</span><span class="ingr-pill">1 tsp Ghee</span></div>
+        <div class="recipe-section">Method</div>
+        <ol class="steps-ol">
+          <li>Matar aur aloo ko pressure cook karein</li>
+          <li>Achhe se mash ya blend karein</li>
+          <li>Ghee daal kar halka warm karein</li>
+          <li>Pani mila kar soup jaisa patla karein</li>
+        </ol>
+        <div class="recipe-tip">💡 Matar fiber aur protein dono mein rich hoti hai</div>
+      </div>
+
+      <div class="recipe-card">
+        <div class="recipe-card-header">
+          <div class="recipe-num">12</div>
+          <div>
+            <div class="recipe-name">Suji ka Halwa</div>
+            <div class="recipe-meal-label">Breakfast | Energy + Carbs</div>
+          </div>
+        </div>
+        <div class="recipe-section">Ingredients</div>
+        <div class="ingr-list"><span class="ingr-pill">2 tbsp Suji</span><span class="ingr-pill">1 tsp Ghee</span><span class="ingr-pill">Warm water</span></div>
+        <div class="recipe-section">Method</div>
+        <ol class="steps-ol">
+          <li>Suji ko ghee mein dheemi aanch par bhoonein</li>
+          <li>Garam paani daalein aur chalate rahein</li>
+          <li>Lumps na banne dein, thoda patla rakhein</li>
+          <li>Thanda karke khilayein</li>
+        </ol>
+        <div class="recipe-tip">💡 Suji jaldi pachti hai aur instant energy deti hai</div>
+      </div>
+
+      <div class="recipe-card">
+        <div class="recipe-card-header">
+          <div class="recipe-num">13</div>
+          <div>
+            <div class="recipe-name">Baajra Kheer</div>
+            <div class="recipe-meal-label">Breakfast | Iron + Warmth</div>
+          </div>
+        </div>
+        <div class="recipe-section">Ingredients</div>
+        <div class="ingr-list"><span class="ingr-pill">2 tbsp Baajra flour</span><span class="ingr-pill">1 cup Amul Taja</span><span class="ingr-pill">1 tsp Ghee</span></div>
+        <div class="recipe-section">Method</div>
+        <ol class="steps-ol">
+          <li>Baajra flour ko paani mein ghol lein</li>
+          <li>Doodh ubaalein aur paste milakar pakaaein</li>
+          <li>Ghee daalein aur 10 min chalate rahein</li>
+          <li>Geeli consistency mein serve karein</li>
+        </ol>
+        <div class="recipe-tip">💡 Baajra thandi ke mausam mein bahut faydemand hai</div>
+      </div>
+
+      <div class="recipe-card">
+        <div class="recipe-card-header">
+          <div class="recipe-num">14</div>
+          <div>
+            <div class="recipe-name">Ragi Dosa (Naram)</div>
+            <div class="recipe-meal-label">Breakfast | Calcium + Texture</div>
+          </div>
+        </div>
+        <div class="recipe-section">Ingredients</div>
+        <div class="ingr-list"><span class="ingr-pill">3 tbsp Ragi flour</span><span class="ingr-pill">Pani/Dahi</span><span class="ingr-pill">Ghee</span></div>
+        <div class="recipe-section">Method</div>
+        <ol class="steps-ol">
+          <li>Ragi ko paani ya thode dahi mein ghol kar batter banayein</li>
+          <li>Pan par chhota aur thoda mota dosa phailayein</li>
+          <li>Ghee laga kar dono taraf se achhe se sekein</li>
+          <li>Doodh ya dahi ke saath mash karke dein</li>
+        </ol>
+        <div class="recipe-tip">💡 Bacche ko thoda chew karna sikhane ke liye behtareen hai</div>
+      </div>
+
+      <div class="recipe-card">
+        <div class="recipe-card-header">
+          <div class="recipe-num">15</div>
+          <div>
+            <div class="recipe-name">Dalia Kheer</div>
+            <div class="recipe-meal-label">Breakfast | Wholesome Carbs</div>
+          </div>
+        </div>
+        <div class="recipe-section">Ingredients</div>
+        <div class="ingr-list"><span class="ingr-pill">2 tbsp Dalia</span><span class="ingr-pill">1 cup Amul Taja</span><span class="ingr-pill">Ghee</span></div>
+        <div class="recipe-section">Method</div>
+        <ol class="steps-ol">
+          <li>Dalia ko pehle paani mein pressure cook kar lein (soft hone tak)</li>
+          <li>Pakke hue dalia mein doodh milakar 5 min ubaalein</li>
+          <li>Ghee daalein aur mash karke khilayein</li>
+        </ol>
+        <div class="recipe-tip">💡 Dalia bahut hi nutritious aur pet bharne wala option hai</div>
+      </div>
+
+      <div class="recipe-card">
+        <div class="recipe-card-header">
+          <div class="recipe-num">16</div>
+          <div>
+            <div class="recipe-name">Gajar-Aloo Puree</div>
+            <div class="recipe-meal-label">Lunch | Vit A + Energy</div>
+          </div>
+        </div>
+        <div class="recipe-section">Ingredients</div>
+        <div class="ingr-list"><span class="ingr-pill">1/2 Gajar</span><span class="ingr-pill">1/2 Aloo</span><span class="ingr-pill">1 tsp Ghee</span></div>
+        <div class="recipe-section">Method</div>
+        <ol class="steps-ol">
+          <li>Gajar aur aloo ko chhote tukdo mein kaat kar ubaal lein</li>
+          <li>Saath mein mash ya blend karein</li>
+          <li>Ghee mila kar smooth texture banayein</li>
+          <li>Thoda paani daal kar consistency theek karein</li>
+        </ol>
+        <div class="recipe-tip">💡 Gajar aakhon ke liye aur aloo vajan badhane ke liye badhiya hai</div>
+      </div>
+
+      <div class="recipe-card">
+        <div class="recipe-card-header">
+          <div class="recipe-num">17</div>
+          <div>
+            <div class="recipe-name">Paneer + Aloo Mash</div>
+            <div class="recipe-meal-label">Lunch | Calcium + Protein</div>
+          </div>
+        </div>
+        <div class="recipe-section">Ingredients</div>
+        <div class="ingr-list"><span class="ingr-pill">Thoda sa Paneer</span><span class="ingr-pill">1/2 Ubla Aloo</span><span class="ingr-pill">Jeera powder</span></div>
+        <div class="recipe-section">Method</div>
+        <ol class="steps-ol">
+          <li>Ghar ka bana soft paneer kaddukas karein</li>
+          <li>Uble hue aloo ke saath achhe se mash karein</li>
+          <li>Halka sa jeera powder mila dein</li>
+          <li>Soft bite-sized tukdon mein dein ya proper mash karein</li>
+        </ol>
+        <div class="recipe-tip">💡 Hamesha fresh ghar ka bana paneer hi use karein</div>
+      </div>
+
+      <div class="recipe-card">
+        <div class="recipe-card-header">
+          <div class="recipe-num">18</div>
+          <div>
+            <div class="recipe-name">Chane ki Dal + Chawal</div>
+            <div class="recipe-meal-label">Lunch | Zinc + Protein</div>
+          </div>
+        </div>
+        <div class="recipe-section">Ingredients</div>
+        <div class="ingr-list"><span class="ingr-pill">2 tbsp Chawal</span><span class="ingr-pill">1 tbsp Chana Dal</span><span class="ingr-pill">Ghee + Haldi</span></div>
+        <div class="recipe-section">Method</div>
+        <ol class="steps-ol">
+          <li>Dal ko 2 ghante pehle bhigo dein</li>
+          <li>Chawal aur dal ko haldi-ghee daal kar pressure cook karein</li>
+          <li>4-5 seeti aane dein taaki dal poori soft ho jaye</li>
+          <li>Blend ya proper mash karke dein</li>
+        </ol>
+        <div class="recipe-tip">💡 Bhigone se dal jaldi pachti hai aur gas nahi karti</div>
+      </div>
+
+      <div class="recipe-card">
+        <div class="recipe-card-header">
+          <div class="recipe-num">19</div>
+          <div>
+            <div class="recipe-name">Moong Dal Soup</div>
+            <div class="recipe-meal-label">Dinner | Light Protein</div>
+          </div>
+        </div>
+        <div class="recipe-section">Ingredients</div>
+        <div class="ingr-list"><span class="ingr-pill">2 tbsp Moong Dal</span><span class="ingr-pill">1 tsp Ghee</span><span class="ingr-pill">Jeera powder</span></div>
+        <div class="recipe-section">Method</div>
+        <ol class="steps-ol">
+          <li>Moong dal ko thode paani ke saath pressure cook karein</li>
+          <li>Dal soft hone par chhan lein ya achhe se mash/blend karein</li>
+          <li>Ghee aur halka jeera powder dal kar patla soup banayein</li>
+        </ol>
+        <div class="recipe-tip">💡 Raat ke khane ke liye moong dal sabse halki aur achhi hoti hai</div>
+      </div>
+
+      <div class="recipe-card">
+        <div class="recipe-card-header">
+          <div class="recipe-num">20</div>
+          <div>
+            <div class="recipe-name">Dal-Chawal Pani</div>
+            <div class="recipe-meal-label">Dinner | Soothing Light</div>
+          </div>
+        </div>
+        <div class="recipe-section">Ingredients</div>
+        <div class="ingr-list"><span class="ingr-pill">Moong Dal + Chawal mix</span><span class="ingr-pill">Paani</span></div>
+        <div class="recipe-section">Method</div>
+        <ol class="steps-ol">
+          <li>Dal-chawal ko zyaada paani dal kar ubaalein</li>
+          <li>Upar ka paani aur thoda soft hissa nikal lein</li>
+          <li>Ghee milakar garam parosein</li>
+        </ol>
+        <div class="recipe-tip">💡 Yeh digestion ke liye sabse zyada gentle option hai</div>
+      </div>
+
+      <div class="recipe-card">
+        <div class="recipe-card-header">
+          <div class="recipe-num">21</div>
+          <div>
+            <div class="recipe-name">Chaval Kheer</div>
+            <div class="recipe-meal-label">Dinner | Easy Carbs</div>
+          </div>
+        </div>
+        <div class="recipe-section">Ingredients</div>
+        <div class="ingr-list"><span class="ingr-pill">1 tbsp Chawal ka powder</span><span class="ingr-pill">1 cup Amul Taja</span><span class="ingr-pill">1 tsp Ghee</span></div>
+        <div class="recipe-section">Method</div>
+        <ol class="steps-ol">
+          <li>Chawal ko dho kar, sukha kar powder bana lein</li>
+          <li>Powder ko doodh mein pakaaein jab tak kheer thick na ho jaye</li>
+          <li>Ghee mila kar serve karein</li>
+        </ol>
+        <div class="recipe-tip">💡 Rice powder jaldi pakta hai aur baby ko swallow karne mein aasan hota hai</div>
+      </div>
+
+      <div class="recipe-card">
+        <div class="recipe-card-header">
+          <div class="recipe-num">22</div>
+          <div>
+            <div class="recipe-name">Sabudana Kheer</div>
+            <div class="recipe-meal-label">Dinner | Pure Energy</div>
+          </div>
+        </div>
+        <div class="recipe-section">Ingredients</div>
+        <div class="ingr-list"><span class="ingr-pill">2 tbsp Sabudana</span><span class="ingr-pill">1 cup Amul Taja</span><span class="ingr-pill">Ghee</span></div>
+        <div class="recipe-section">Method</div>
+        <ol class="steps-ol">
+          <li>Sabudana ko 3-4 ghante pehle bhigo dein</li>
+          <li>Transparent hone tak thode paani mein ubaalein</li>
+          <li>Phir doodh daal kar 5 min pakaaein</li>
+          <li>Mash karke warm serve karein</li>
+        </ol>
+        <div class="recipe-tip">💡 Sabudana weight gain ke liye bahut helpful hota hai</div>
+      </div>
+
+    </div>
+
+    <!-- AVOID SECTION -->
+    <div class="section-header" id="avoid-start">
+      <div class="section-icon" style="background:#FDECEA;">🚫</div>
+      <div>
+        <div class="section-title">Kya Avoid Karein — Complete List</div>
+        <div class="section-sub">9 mahine mein yeh cheezein bilkul nahi deni chahiye</div>
+      </div>
+    </div>
+    <div class="avoid-table-wrap">
+      <table class="avoid-table">
+        <thead>
+          <tr>
+            <th>Cheez (Item)</th>
+            <th>Kyon Nahi Dena</th>
+            <th>Risk Level</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Namak (Salt)</td>
+            <td>Baby ki kidney immature hoti hai — extra sodium kidney par strain daalta hai. 1 saal tak bilkul nahi
+              dena.</td>
+            <td><span class="danger-tag danger-high">High Risk</span></td>
+          </tr>
+          <tr>
+            <td>Cheeni / Sugar</td>
+            <td>Teeth kharab karta hai, sweet addiction lagta hai. Natural fruits se hi meethas milna chahiye.</td>
+            <td><span class="danger-tag danger-high">High Risk</span></td>
+          </tr>
+          <tr>
+            <td>Shahed (Honey)</td>
+            <td>Clostridium botulinum bacteria hota hai — 1 saal se chhhote bachchon mein Infant Botulism ka risk.</td>
+            <td><span class="danger-tag danger-high">Extremely High</span></td>
+          </tr>
+          <tr>
+            <td>Sabut Meva (Whole Nuts)</td>
+            <td>Choking hazard — gale mein fas sakta hai. 5 saal tak sabut nuts nahi dene chahiye.</td>
+            <td><span class="danger-tag danger-high">Choking Risk</span></td>
+          </tr>
+          <tr>
+            <td>Gaay ka Doodh (as main drink in excess)</td>
+            <td>Doctor ne Amul Taja allow kiya hai — par quantity limit zaroor rakhein (max 400–500 ml/day total).
+              Zyaada dene se iron deficiency ho sakti hai.</td>
+            <td><span class="danger-tag danger-mid">Moderate — Limit</span></td>
+          </tr>
+
+          <tr>
+            <td>Maida (Refined Flour)</td>
+            <td>Koi nutrition nahi — gut mein stick karta hai. Whole grain hamesha better hai.</td>
+            <td><span class="danger-tag danger-mid">Avoid</span></td>
+          </tr>
+          <tr>
+            <td>Packed / Processed Food</td>
+            <td>Hidden salt, sugar aur preservatives hote hain. Biscuits, packaged khichdi mixes, baby food packets —
+              sab avoid karein.</td>
+            <td><span class="danger-tag danger-high">High Risk</span></td>
+          </tr>
+          <tr>
+            <td>Teekha Masala (Spices)</td>
+            <td>Baby ka digestive system develop ho raha hai — mirch, garam masala pet kharab kar sakta hai.</td>
+            <td><span class="danger-tag danger-mid">Avoid</span></td>
+          </tr>
+          <tr>
+            <td>Packaged Juices</td>
+            <td>Sugar aur preservatives bhare hote hain — natural fruit juice bhi 1 saal tak avoid karna chahiye. Puree
+              dein, juice nahi.</td>
+            <td><span class="danger-tag danger-high">High Risk</span></td>
+          </tr>
+          <tr>
+            <td>Caffeinated Drinks (Tea/Coffee)</td>
+            <td>Caffeine iron absorption block karta hai. Baby ko chaay-coffee bilkul nahi deni.</td>
+            <td><span class="danger-tag danger-high">Strictly No</span></td>
+          </tr>
+          <tr>
+            <td>Gaye ke Doodh mein Banee Biscuit / Market Khana</td>
+            <td>Parle-G jaise biscuits mein sugar aur salt hote hain — sirf ghar ka bana khana dein.</td>
+            <td><span class="danger-tag danger-mid">Avoid</span></td>
+          </tr>
+          <tr>
+            <td>Seedhaa Fridge ka Khana</td>
+            <td>Thanda khana baby ke pet ko upset kar sakta hai. Hamesha room temperature ya halka garam karke dein.
+            </td>
+            <td><span class="danger-tag danger-mid">Important</span></td>
+          </tr>
+          <tr>
+            <td>Nimbu (Lemon) aur Khatte Phal</td>
+            <td>Nimbu bahut acidic hota hai. 1 saal se chhote baccho ko seedha dene se unke muh ke aas-paas ya diaper area mein rash ho sakta hai. Thoda acidity aur pet mein jalan bhi kar sakta hai.</td>
+            <td><span class="danger-tag danger-mid">Avoid — Acidity Risk</span></td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <!-- TIPS -->
+    <div class="section-header">
+      <div class="section-icon" style="background:var(--green-pale);">✅</div>
+      <div>
+        <div class="section-title">Important Tips — Feeding ke Waqt Dhyan Rakhen</div>
+      </div>
+    </div>
+    <div class="tips-grid">
+      <div class="tip-card">
+        <div class="tip-icon">🆕</div>
+        <div class="tip-title">New Food Rule (3-Day Rule)</div>
+        <div class="tip-text">Koi bhi naya food introduce karte waqt 3 din wait karein. Agar koi reaction nahi toh dusra
+          naya food shuru karein.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">🌡️</div>
+        <div class="tip-title">Temperature Check</div>
+        <div class="tip-text">Khana hamesha body temperature ya thoda garam dein. Thanda ya bahut garam bilkul nahi.
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">🥄</div>
+        <div class="tip-title">Portion Size</div>
+        <div class="tip-text">Shuruat 2–3 tbsp se karein. Baccha bhukha ho toh aur dein — force mat karein kabhi bhi.
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">🫒</div>
+        <div class="tip-title">Ghee Zaroor Daalein</div>
+        <div class="tip-text">Har solid meal mein 1 tsp ghee milaaein — brain development aur fat-soluble vitamins ke
+          liye bahut zaruri.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">🚨</div>
+        <div class="tip-title">Allergy Signs Dekhte Rahein</div>
+        <div class="tip-text">Rash, ulti, dast, aankhon mein sujan — yeh allergy ke signs hain. Naya food band karein,
+          doctor ko call karein.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">💧</div>
+        <div class="tip-title">Paani — Thoda Dein</div>
+        <div class="tip-text">Solid food shuru hone par din mein 30–60 ml saada paani diya ja sakta hai. Zyaada nahi —
+          stomach bhar jaata hai.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">🧹</div>
+        <div class="tip-title">Hygiene (Saafai)</div>
+        <div class="tip-text">Khana banane se pehle haath dhoyein. Kataai, bartan sab saaf hone chahiye. Baby ka khana
+          fresh banakar dein — next meal ka rakhna avoid karein.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">📈</div>
+        <div class="tip-title">Texture Badlein</div>
+        <div class="tip-text">9 mahine mein baccha thoda mota khana seekh sakta hai. Soft mash se shuruat karein, phir
+          dheere dheere chunky banaaein.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">🩺</div>
+        <div class="tip-title">Doctor Follow-up</div>
+        <div class="tip-text">Har 4–6 hafte mein weight aur development check karaaein. Khana kam khaaye ya weight na
+          badhe toh turant doctor se milein.</div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+      <strong>Note:</strong> Yeh chart generic guidance ke liye hai. Apne bacche ke doctor ki salah hamesha sabse upar
+      hai.<br>
+      Koi bhi naya symptom ya concern ho toh turant Pediatrician se sampark karein.
+    </div>
+  </div>
+
+</body>
+
+</html>
